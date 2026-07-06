@@ -167,12 +167,13 @@ def register_events(events: list[dict], monday: date,
 
 
 # ── ICS (Outlook COM 이 없을 때 가져오기용) ──────────────────────────
-TZID = "Asia/Seoul"
+KST_OFFSET = timedelta(hours=9)   # 일정 시각은 한국시간(KST) 기준으로 생성됨
 
 
 def build_ics(events: list[dict]) -> str:
-    """시간대를 명시한 ICS 생성. TZID 없이 내보내면 일부 캘린더(OWA 등)가
-    시간을 UTC로 오해석해 9시간 밀리므로 VTIMEZONE + TZID 필수."""
+    """모든 시각을 UTC(Z)로 변환해 기록한다. TZID 방식은 일부 Outlook이
+    IANA 시간대 이름을 해석하지 못해 9시간 밀리는 문제가 있어,
+    가장 호환성 높은 UTC 절대시각을 사용한다."""
     def esc(s: str) -> str:
         return (s.replace("\\", "\\\\").replace(";", r"\;")
                  .replace(",", r"\,").replace("\n", r"\n"))
@@ -183,27 +184,19 @@ def build_ics(events: list[dict]) -> str:
         "PRODID:-//WorkReport AutoFill//KR",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "BEGIN:VTIMEZONE",
-        f"TZID:{TZID}",
-        "BEGIN:STANDARD",
-        "DTSTART:19700101T000000",
-        "TZOFFSETFROM:+0900",
-        "TZOFFSETTO:+0900",
-        "TZNAME:KST",
-        "END:STANDARD",
-        "END:VTIMEZONE",
     ]
     for i, ev in enumerate(events):
         if not ev.get("included", True):
             continue
         uid = f"wra-{ev['start']:%Y%m%dT%H%M}-{i}@autofill"
-        stamp_utc = ev["start"] - timedelta(hours=9)   # KST → UTC
+        st_utc = ev["start"] - KST_OFFSET
+        en_utc = ev["end"] - KST_OFFSET
         lines += [
             "BEGIN:VEVENT",
             f"UID:{uid}",
-            f"DTSTAMP:{stamp_utc:%Y%m%dT%H%M%S}Z",
-            f"DTSTART;TZID={TZID}:{ev['start']:%Y%m%dT%H%M%S}",
-            f"DTEND;TZID={TZID}:{ev['end']:%Y%m%dT%H%M%S}",
+            f"DTSTAMP:{st_utc:%Y%m%dT%H%M%S}Z",
+            f"DTSTART:{st_utc:%Y%m%dT%H%M%S}Z",
+            f"DTEND:{en_utc:%Y%m%dT%H%M%S}Z",
             f"SUMMARY:{esc(subject_of(ev))}",
             f"CATEGORIES:{CATEGORY}",
             "END:VEVENT",
