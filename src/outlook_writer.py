@@ -56,6 +56,9 @@ def _has_outlook_profile() -> bool:
 def outlook_available(timeout: float = 6.0) -> tuple[bool, str]:
     """데스크톱 Outlook COM 사용 가능 여부 (앱이 멈추지 않도록
     프로필 사전 확인 + 타임아웃 적용)."""
+    import sys
+    if not sys.platform.startswith("win"):
+        return False, "웹 서버 환경 — ICS 파일 다운로드로 Outlook에 추가하세요"
     try:
         import win32com.client  # noqa: F401
     except ImportError:

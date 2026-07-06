@@ -1,0 +1,10 @@
+# 로컬 실행 산출물 (개인 데이터 — 저장소에 올리지 않음)
+output/
+config/history/
+config/user_prefs.json
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
