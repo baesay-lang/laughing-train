@@ -167,7 +167,12 @@ def register_events(events: list[dict], monday: date,
 
 
 # ── ICS (Outlook COM 이 없을 때 가져오기용) ──────────────────────────
+TZID = "Asia/Seoul"
+
+
 def build_ics(events: list[dict]) -> str:
+    """시간대를 명시한 ICS 생성. TZID 없이 내보내면 일부 캘린더(OWA 등)가
+    시간을 UTC로 오해석해 9시간 밀리므로 VTIMEZONE + TZID 필수."""
     def esc(s: str) -> str:
         return (s.replace("\\", "\\\\").replace(";", r"\;")
                  .replace(",", r"\,").replace("\n", r"\n"))
@@ -178,17 +183,27 @@ def build_ics(events: list[dict]) -> str:
         "PRODID:-//WorkReport AutoFill//KR",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
+        "BEGIN:VTIMEZONE",
+        f"TZID:{TZID}",
+        "BEGIN:STANDARD",
+        "DTSTART:19700101T000000",
+        "TZOFFSETFROM:+0900",
+        "TZOFFSETTO:+0900",
+        "TZNAME:KST",
+        "END:STANDARD",
+        "END:VTIMEZONE",
     ]
     for i, ev in enumerate(events):
         if not ev.get("included", True):
             continue
         uid = f"wra-{ev['start']:%Y%m%dT%H%M}-{i}@autofill"
+        stamp_utc = ev["start"] - timedelta(hours=9)   # KST → UTC
         lines += [
             "BEGIN:VEVENT",
             f"UID:{uid}",
-            f"DTSTAMP:{ev['start']:%Y%m%dT%H%M%S}",
-            f"DTSTART:{ev['start']:%Y%m%dT%H%M%S}",
-            f"DTEND:{ev['end']:%Y%m%dT%H%M%S}",
+            f"DTSTAMP:{stamp_utc:%Y%m%dT%H%M%S}Z",
+            f"DTSTART;TZID={TZID}:{ev['start']:%Y%m%dT%H%M%S}",
+            f"DTEND;TZID={TZID}:{ev['end']:%Y%m%dT%H%M%S}",
             f"SUMMARY:{esc(subject_of(ev))}",
             f"CATEGORIES:{CATEGORY}",
             "END:VEVENT",
