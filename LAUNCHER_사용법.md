@@ -8,23 +8,16 @@
 2. **Python 자동 설치** — Python이 없으면 `winget`으로 Python 3.12를 설치하고,
    winget이 없는 PC에서는 python.org에서 설치 파일을 내려받아 설치합니다.
 3. **가상환경 + 패키지 설치** — 같은 폴더에 `.venv` 가상환경을 만들고,
-   `requirements.txt`가 있으면 필요한 패키지(예: selenium)를 자동 설치합니다.
-4. **프로그램 실행** — `workreport_autofill.py`를 실행합니다.
+   `requirements.txt`의 패키지(streamlit, pandas, openpyxl, pywin32)를 자동 설치합니다.
+4. **프로그램 실행** — `streamlit run autofill_app.py`로 앱을 띄우고 브라우저를 엽니다.
 
 ## 설치 방법
 
-1. `WorkReport_AutoFill_실행.bat`을 WorkReport AutoFill 파이썬 스크립트가 있는 폴더에 복사합니다.
-2. 파이썬 스크립트 파일명이 `workreport_autofill.py`가 아니라면, 배치 파일을 메모장으로 열어
+1. `WorkReport_AutoFill_실행.bat`과 `requirements.txt`를 `WorkReport_AutoFill_v1.0` 폴더
+   (`autofill_app.py`가 있는 곳)에 복사합니다.
+2. 앱 파일명이 `autofill_app.py`가 아니라면, 배치 파일을 메모장으로 열어
    상단의 `set "MAIN_SCRIPT=..."` 줄을 실제 파일명으로 바꿉니다.
-3. 스크립트가 사용하는 패키지가 있다면 같은 폴더에 `requirements.txt`를 만들어 한 줄에 하나씩 적습니다.
-   예:
-
-   ```
-   selenium
-   webdriver-manager
-   ```
-
-4. 배치 파일을 더블클릭해 실행합니다.
+3. 배치 파일을 더블클릭해 실행합니다. 잠시 후 브라우저에 앱이 열립니다.
 
 ## 참고: 수동으로 해결하고 싶다면
 

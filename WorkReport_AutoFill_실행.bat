@@ -4,9 +4,9 @@ chcp 65001 >nul
 cd /d "%~dp0"
 
 REM ====================================================
-REM  WorkReport AutoFill launcher v1.1
-REM  실행할 파이썬 스크립트 파일명 (이 파일과 같은 폴더에 두세요)
-set "MAIN_SCRIPT=workreport_autofill.py"
+REM  WorkReport AutoFill launcher v1.2
+REM  실행할 Streamlit 앱 파일명 (이 파일과 같은 폴더에 두세요)
+set "MAIN_SCRIPT=autofill_app.py"
 REM ====================================================
 
 echo ====================================================
@@ -89,9 +89,10 @@ if exist "requirements.txt" (
 
 REM ---- 4. 프로그램 실행 ----
 echo.
-echo WorkReport AutoFill을 실행합니다...
+echo WorkReport AutoFill을 실행합니다. 잠시 후 브라우저가 자동으로 열립니다...
+echo (종료하려면 이 창에서 Ctrl+C 를 누르거나 창을 닫으세요)
 echo.
-".venv\Scripts\python.exe" "%MAIN_SCRIPT%" %*
+".venv\Scripts\python.exe" -m streamlit run "%MAIN_SCRIPT%" %*
 set "EXIT_CODE=%errorlevel%"
 echo.
 if not "%EXIT_CODE%"=="0" (
