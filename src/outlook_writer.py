@@ -189,10 +189,13 @@ def build_ics(events: list[dict], offset_hours: float = 9.0) -> str:
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
     ]
+    # UID를 생성 시각마다 다르게 — 같은 UID면 캘린더가 재가져오기를
+    # "이미 있는 일정"으로 보고 무시해, 수정본을 넣어도 반영되지 않는다.
+    gen = datetime.now().strftime("%y%m%d%H%M%S")
     for i, ev in enumerate(events):
         if not ev.get("included", True):
             continue
-        uid = f"wra-{ev['start']:%Y%m%dT%H%M}-{i}@autofill"
+        uid = f"wra-{gen}-{ev['start']:%Y%m%dT%H%M}-{i}@autofill"
         st_utc = ev["start"] - timedelta(hours=offset_hours)
         en_utc = ev["end"] - timedelta(hours=offset_hours)
         lines += [
