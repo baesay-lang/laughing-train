@@ -170,10 +170,14 @@ def register_events(events: list[dict], monday: date,
 KST_OFFSET = timedelta(hours=9)   # 일정 시각은 한국시간(KST) 기준으로 생성됨
 
 
-def build_ics(events: list[dict]) -> str:
+def build_ics(events: list[dict], offset_hours: float = 9.0) -> str:
     """모든 시각을 UTC(Z)로 변환해 기록한다. TZID 방식은 일부 Outlook이
     IANA 시간대 이름을 해석하지 못해 9시간 밀리는 문제가 있어,
-    가장 호환성 높은 UTC 절대시각을 사용한다."""
+    가장 호환성 높은 UTC 절대시각을 사용한다.
+
+    offset_hours: 일정 시각을 해석할 시간대의 UTC 오프셋 (기본 +9 = KST).
+    캘린더 계정의 표시 시간대가 서울이 아니라 UTC 등으로 설정된 경우
+    이 값을 그 시간대에 맞추면 표시가 보정된다 (예: UTC 계정 → 0)."""
     def esc(s: str) -> str:
         return (s.replace("\\", "\\\\").replace(";", r"\;")
                  .replace(",", r"\,").replace("\n", r"\n"))
@@ -189,8 +193,8 @@ def build_ics(events: list[dict]) -> str:
         if not ev.get("included", True):
             continue
         uid = f"wra-{ev['start']:%Y%m%dT%H%M}-{i}@autofill"
-        st_utc = ev["start"] - KST_OFFSET
-        en_utc = ev["end"] - KST_OFFSET
+        st_utc = ev["start"] - timedelta(hours=offset_hours)
+        en_utc = ev["end"] - timedelta(hours=offset_hours)
         lines += [
             "BEGIN:VEVENT",
             f"UID:{uid}",

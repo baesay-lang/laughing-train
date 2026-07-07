@@ -296,6 +296,24 @@ def main():
         holiday_task = by_label[hol_label]
 
         st.divider()
+        st.subheader("🌏 캘린더 시간대 (ICS/Outlook)")
+        TZ_CHOICES = {
+            "(UTC+09:00) 서울 — 기본":                       9.0,
+            "(UTC+00:00) UTC — 일정이 9시간 밀려 보이면 선택": 0.0,
+            "(UTC+08:00) 중국·싱가포르":                      8.0,
+            "(UTC+07:00) 베트남·태국":                        7.0,
+        }
+        _seed_widget("ics_tz", prefs.get("ics_tz", list(TZ_CHOICES)[0]))
+        if st.session_state.get("ics_tz") not in TZ_CHOICES:
+            st.session_state["ics_tz"] = list(TZ_CHOICES)[0]
+        tz_label = st.selectbox(
+            "캘린더 계정의 표시 시간대에 맞추세요. "
+            "가져온 일정이 9시간 밀려 보인다면 계정이 UTC로 설정된 것이므로 "
+            "UTC를 선택하면 보정됩니다.",
+            list(TZ_CHOICES), key="ics_tz")
+        tz_offset = TZ_CHOICES[tz_label]
+
+        st.divider()
         n_hist = len(list(HIST_DIR.glob(f"{team_id}_*.json")))
         st.caption(f"저장된 이력: {n_hist}주 (Excel 생성 시 자동 저장 → "
                    "'최근 이력 참조'·'복사' 모드에 사용)")
@@ -303,6 +321,7 @@ def main():
     # 설정 자동 저장
     prefs["user_name"]   = user_name
     prefs["employee_id"] = emp_id
+    prefs["ics_tz"]      = tz_label
     tp.update({
         "work_start": t_ws.strftime("%H:%M"), "work_end": t_we.strftime("%H:%M"),
         "lunch_start": t_ls.strftime("%H:%M"), "lunch_end": t_le.strftime("%H:%M"),
@@ -466,13 +485,13 @@ def main():
         with ic1:
             if this_events:
                 st.download_button(
-                    "금주 ICS 다운로드", data=build_ics(this_events),
+                    "금주 ICS 다운로드", data=build_ics(this_events, tz_offset),
                     file_name=f"주간업무_금주_{this_mon:%Y%m%d}.ics",
                     mime="text/calendar", use_container_width=True)
         with ic2:
             if next_events:
                 st.download_button(
-                    "차주 ICS 다운로드", data=build_ics(next_events),
+                    "차주 ICS 다운로드", data=build_ics(next_events, tz_offset),
                     file_name=f"주간업무_차주_{next_mon:%Y%m%d}.ics",
                     mime="text/calendar", use_container_width=True)
 
