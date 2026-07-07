@@ -98,13 +98,6 @@ def _week_range(monday: date) -> tuple[datetime, datetime]:
     return start, end
 
 
-def _aware(dt: datetime) -> datetime:
-    """naive datetime → 로컬 시간대 명시 (COM 변환 시 UTC 오해석 방지)."""
-    if dt.tzinfo is None:
-        return dt.astimezone()
-    return dt
-
-
 def delete_auto_events(monday: date) -> int:
     """해당 주(월~금)에서 CATEGORY 가 붙은 자동 등록 일정만 삭제."""
     _com_init()
@@ -155,8 +148,11 @@ def register_events(events: list[dict], monday: date,
             continue
         appt = app.CreateItem(OL_APPOINTMENT)
         appt.Subject = subject_of(ev)
-        appt.Start = _aware(ev["start"])  # 시간대 명시 → 9시간 밀림 방지
-        appt.End = _aware(ev["end"])
+        # naive 로컬 시각을 그대로 전달해야 Outlook이 PC 로컬 시간으로
+        # 해석한다. tz-aware로 넘기면 pywin32가 UTC 벽시계로 변환해
+        # 9시간(KST) 밀려 등록된다.
+        appt.Start = ev["start"]
+        appt.End = ev["end"]
         appt.Categories = CATEGORY
         appt.BusyStatus = OL_BUSY
         appt.ReminderSet = False
