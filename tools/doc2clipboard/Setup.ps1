@@ -1,5 +1,33 @@
 <#
 ================================================================
+ Setup.ps1  —  Doc2Clipboard 설치 관리자 (한 번만 실행하면 됨)
+================================================================
+ 이 스크립트 내용을 PowerShell 창에 통째로 붙여넣고 Enter 치면:
+   1) Doc2Clipboard 본체를 %USERPROFILE%\Doc2Clipboard 에 저장
+   2) 바탕화면 바로가기 생성 (더블클릭 → 폴더 물어봄)
+   3) 우클릭 '보내기(Send to)' 메뉴에 등록
+      → 앞으로는 폴더에서 [우클릭 → 보내기 → Doc2Clipboard] 한 번이면 끝
+
+ 실행파일(.exe) 설치가 없어 AppLocker/WDAC 정책과 무관합니다.
+ 바로가기는 파일을 텍스트로 읽어 실행(iex)하므로, .ps1 직접 실행이
+ 막힌 환경에서도 '콘솔 붙여넣기'와 동일하게 동작합니다.
+
+ 제거하려면: 바탕화면/보내기 폴더의 Doc2Clipboard 바로가기와
+             %USERPROFILE%\Doc2Clipboard 폴더를 삭제하세요.
+================================================================
+#>
+
+$ErrorActionPreference = 'Stop'
+try {
+
+$installDir = Join-Path $env:USERPROFILE 'Doc2Clipboard'
+New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+$scriptPath = Join-Path $installDir 'Doc2Clipboard.ps1'
+
+# ---- 아래 @' ... '@ 안이 Doc2Clipboard 본체입니다(그대로 저장됨) ----
+$body = @'
+<#
+================================================================
  Doc2Clipboard.ps1
 ================================================================
  폴더 안의 문서(docx/doc/pptx/ppt/xlsx/xlsm/pdf/txt/md/csv)를
@@ -283,4 +311,53 @@ Write-Host ""
 
 Write-Host ""
 Write-Host "모든 문서 전송 완료!" -ForegroundColor Green
+Read-Host "창을 닫으려면 Enter를 누르세요"
+'@
+# ---- 본체 끝 ----
+
+# UTF-8(BOM 포함)로 저장 → 한글 깨짐 방지
+[System.IO.File]::WriteAllText($scriptPath, $body, (New-Object System.Text.UTF8Encoding($true)))
+Write-Host "설치됨: $scriptPath" -ForegroundColor Green
+
+$ps = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
+$ws = New-Object -ComObject WScript.Shell
+
+# 본체 파일을 텍스트로 읽어 그대로 실행. .ps1 실행정책/스크립트정책과 무관.
+$readSelf = "iex ([System.IO.File]::ReadAllText('$scriptPath',[System.Text.Encoding]::UTF8))"
+
+# 1) 바탕화면 바로가기 (더블클릭 → 폴더를 물어봄)
+$desktop = [Environment]::GetFolderPath('Desktop')
+$lnk = $ws.CreateShortcut((Join-Path $desktop 'Doc2Clipboard.lnk'))
+$lnk.TargetPath       = $ps
+$lnk.Arguments        = "-NoProfile -ExecutionPolicy Bypass -Command `"$readSelf`""
+$lnk.WorkingDirectory = $installDir
+$lnk.IconLocation     = "$ps,0"
+$lnk.Description       = 'Doc2Clipboard - 문서를 claude.ai에 붙여넣기'
+$lnk.Save()
+Write-Host "바탕화면 바로가기 생성됨" -ForegroundColor Green
+
+# 2) 우클릭 '보내기(Send to)' 메뉴 등록
+#    폴더를 우클릭하면 그 폴더 경로가 마지막 인자로 넘어옴 → $args[0]
+$sendto = [Environment]::GetFolderPath('SendTo')
+$cmd = "`$env:D2C_FOLDER=`$args[0]; $readSelf"
+$lnk2 = $ws.CreateShortcut((Join-Path $sendto 'Doc2Clipboard (→claude.ai).lnk'))
+$lnk2.TargetPath       = $ps
+$lnk2.Arguments        = "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`""
+$lnk2.WorkingDirectory = $installDir
+$lnk2.IconLocation     = "$ps,0"
+$lnk2.Description       = '선택한 폴더의 문서를 변환해 claude.ai에 붙여넣기'
+$lnk2.Save()
+Write-Host "우클릭 '보내기' 메뉴에 등록됨" -ForegroundColor Green
+
+Write-Host ""
+Write-Host "=== 설치 완료! ===" -ForegroundColor Cyan
+Write-Host "사용법 1) 문서가 든 폴더에서  [우클릭 → 보내기 → Doc2Clipboard]" -ForegroundColor Cyan
+Write-Host "사용법 2) 바탕화면 [Doc2Clipboard] 아이콘 더블클릭 → 폴더 경로 입력" -ForegroundColor Cyan
+
+}
+catch {
+    Write-Host ""
+    Write-Host "설치 중 오류: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "COM(WScript.Shell) 생성이 정책으로 막혔을 수 있습니다. 이 메시지를 알려주세요." -ForegroundColor Yellow
+}
 Read-Host "창을 닫으려면 Enter를 누르세요"
