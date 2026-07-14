@@ -1,0 +1,9 @@
+{
+  "title": "주간업무 자동작성 (WorkReport AutoFill)",
+  "date": "2026-07-07",
+  "category": "코드/도구",
+  "project": "업무 자동화",
+  "description": "팀 업무코드만으로 월~금 주간업무를 자동 배치하고 기존 보고 양식 그대로 Excel을 생성하는 Streamlit 웹앱. Outlook 일정 등록과 ICS 캘린더 내보내기(KST 시간대) 지원.",
+  "tags": ["Streamlit", "Excel", "Outlook", "주간업무"],
+  "main": "README.md"
+}

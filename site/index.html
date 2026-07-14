@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>나의 작업 아카이브</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗂️</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <h1>🗂️ 나의 작업 아카이브</h1>
+    <p class="subtitle">Claude와 함께 만든 결과물 모음</p>
+    <input id="search" type="search" placeholder="제목 · 설명 · 태그 검색…" autocomplete="off">
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="sidebar">
+    <section>
+      <h2>카테고리</h2>
+      <div id="category-chips" class="chips"></div>
+    </section>
+    <section>
+      <h2>프로젝트</h2>
+      <div id="project-chips" class="chips"></div>
+    </section>
+    <section class="meta-note">
+      <p id="stats"></p>
+      <p id="generated"></p>
+    </section>
+  </aside>
+
+  <section id="timeline" class="timeline" aria-live="polite"></section>
+</main>
+
+<div id="detail-overlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="detail-panel">
+    <button id="detail-close" class="close-btn" aria-label="닫기">✕</button>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
