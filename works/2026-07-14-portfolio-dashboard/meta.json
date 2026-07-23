@@ -1,0 +1,9 @@
+{
+  "title": "업무 포트폴리오 대시보드 구축",
+  "date": "2026-07-14",
+  "category": "코드/도구",
+  "project": "포트폴리오 대시보드",
+  "description": "Claude와 함께 만든 결과물을 날짜·카테고리·프로젝트별로 자동 정리해 보여주는 홈페이지. works/ 폴더에 결과물을 넣고 푸시하면 GitHub Pages에 자동 배포된다.",
+  "tags": ["대시보드", "자동화", "GitHub Pages"],
+  "main": "guide.md"
+}

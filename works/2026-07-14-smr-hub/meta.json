@@ -1,0 +1,9 @@
+{
+  "title": "SMR 레퍼런스 허브 (SMR HUB)",
+  "date": "2026-07-14",
+  "category": "웹/시각화",
+  "project": "SMR HUB",
+  "description": "소형모듈원자로(SMR) 업무용 레퍼런스 사이트. 개발사 현황·인허가 트랙·노형 분류·원전 DB·아시아 사업 구조·LCOE 계산기·SMR 뉴스 자동 추적 등 30여 개 페이지로 구성된 정적 웹 허브. 지속 업데이트 중.",
+  "tags": ["SMR", "원자력", "레퍼런스", "대시보드"],
+  "external_url": "https://baesay-lang.github.io/smr-hub/"
+}

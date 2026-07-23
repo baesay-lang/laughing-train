@@ -1,0 +1,213 @@
+{
+ "generated_at": "2026-07-23T13:59:29+00:00",
+ "repo_url": "https://github.com/baesay-lang/laughing-train",
+ "categories": [
+  "코드/도구",
+  "웹/시각화"
+ ],
+ "projects": [
+  "포트폴리오 대시보드",
+  "SMR HUB",
+  "업무 자동화"
+ ],
+ "items": [
+  {
+   "id": "2026-07-14-portfolio-dashboard",
+   "title": "업무 포트폴리오 대시보드 구축",
+   "date": "2026-07-14",
+   "category": "코드/도구",
+   "project": "포트폴리오 대시보드",
+   "description": "Claude와 함께 만든 결과물을 날짜·카테고리·프로젝트별로 자동 정리해 보여주는 홈페이지. works/ 폴더에 결과물을 넣고 푸시하면 GitHub Pages에 자동 배포된다.",
+   "tags": [
+    "대시보드",
+    "자동화",
+    "GitHub Pages"
+   ],
+   "main": "guide.md",
+   "external_url": "",
+   "files": [
+    {
+     "name": "guide.md",
+     "path": "works/2026-07-14-portfolio-dashboard/guide.md",
+     "kind": "md",
+     "size": 2197
+    }
+   ],
+   "archive": [],
+   "history_url": "https://github.com/baesay-lang/laughing-train/commits/main/works/2026-07-14-portfolio-dashboard"
+  },
+  {
+   "id": "2026-07-14-smr-hub",
+   "title": "SMR 레퍼런스 허브 (SMR HUB)",
+   "date": "2026-07-14",
+   "category": "웹/시각화",
+   "project": "SMR HUB",
+   "description": "소형모듈원자로(SMR) 업무용 레퍼런스 사이트. 개발사 현황·인허가 트랙·노형 분류·원전 DB·아시아 사업 구조·LCOE 계산기·SMR 뉴스 자동 추적 등 30여 개 페이지로 구성된 정적 웹 허브. 지속 업데이트 중.",
+   "tags": [
+    "SMR",
+    "원자력",
+    "레퍼런스",
+    "대시보드"
+   ],
+   "main": null,
+   "external_url": "https://baesay-lang.github.io/smr-hub/",
+   "files": [],
+   "archive": [],
+   "history_url": "https://github.com/baesay-lang/laughing-train/commits/main/works/2026-07-14-smr-hub"
+  },
+  {
+   "id": "2026-07-14-work-calendar",
+   "title": "주간업무 캘린더 앱 (Work Calendar)",
+   "date": "2026-07-14",
+   "category": "코드/도구",
+   "project": "업무 자동화",
+   "description": "팀 업무코드 기반으로 주간 일정을 만들고 관리하는 데스크톱 캘린더 앱. 일/주/월 뷰, 정기 일정, Outlook 등록·ICS 내보내기, Excel 보고서 생성, 분석 대시보드, 자동 업데이트를 지원한다. 현재 v3.5.0 (플랜트영업팀 업무 코드 추가).",
+   "tags": [
+    "캘린더",
+    "업무코드",
+    "Outlook",
+    "v3.5.0"
+   ],
+   "main": null,
+   "external_url": "https://baesay-lang.github.io/smr-hub/work-calendar.html",
+   "files": [],
+   "archive": [],
+   "history_url": "https://github.com/baesay-lang/laughing-train/commits/main/works/2026-07-14-work-calendar"
+  },
+  {
+   "id": "2026-07-13-doc2clipboard",
+   "title": "Doc2Clipboard / Doc2Batch — 문서 붙여넣기 업로드 도구",
+   "date": "2026-07-13",
+   "category": "코드/도구",
+   "project": "업무 자동화",
+   "description": "파일 업로드가 막힌 사내 PC에서 폴더 안의 문서를 붙여넣기(Ctrl+V)로 claude.ai에 넘길 수 있게 해주는 PowerShell 도구. 텍스트 추출 모드와 PDF/이미지 배치 모드, 우클릭 메뉴 설치 스크립트 포함.",
+   "tags": [
+    "PowerShell",
+    "claude.ai",
+    "Windows"
+   ],
+   "main": "README.md",
+   "external_url": "",
+   "files": [
+    {
+     "name": "Doc2Batch.ps1",
+     "path": "works/2026-07-13-doc2clipboard/Doc2Batch.ps1",
+     "kind": "other",
+     "size": 14053
+    },
+    {
+     "name": "Doc2Clipboard.ps1",
+     "path": "works/2026-07-13-doc2clipboard/Doc2Clipboard.ps1",
+     "kind": "other",
+     "size": 11005
+    },
+    {
+     "name": "README.md",
+     "path": "works/2026-07-13-doc2clipboard/README.md",
+     "kind": "md",
+     "size": 3860
+    },
+    {
+     "name": "Setup.ps1",
+     "path": "works/2026-07-13-doc2clipboard/Setup.ps1",
+     "kind": "other",
+     "size": 29409
+    }
+   ],
+   "archive": [],
+   "history_url": "https://github.com/baesay-lang/laughing-train/commits/main/works/2026-07-13-doc2clipboard"
+  },
+  {
+   "id": "2026-07-07-workreport-autofill",
+   "title": "주간업무 자동작성 (WorkReport AutoFill)",
+   "date": "2026-07-07",
+   "category": "코드/도구",
+   "project": "업무 자동화",
+   "description": "팀 업무코드만으로 월~금 주간업무를 자동 배치하고 기존 보고 양식 그대로 Excel을 생성하는 Streamlit 웹앱. Outlook 일정 등록과 ICS 캘린더 내보내기(KST 시간대) 지원.",
+   "tags": [
+    "Streamlit",
+    "Excel",
+    "Outlook",
+    "주간업무"
+   ],
+   "main": "README.md",
+   "external_url": "",
+   "files": [
+    {
+     "name": "LAUNCHER_사용법.md",
+     "path": "works/2026-07-07-workreport-autofill/LAUNCHER_사용법.md",
+     "kind": "md",
+     "size": 1803
+    },
+    {
+     "name": "README.md",
+     "path": "works/2026-07-07-workreport-autofill/README.md",
+     "kind": "md",
+     "size": 2783
+    },
+    {
+     "name": "WorkReport_AutoFill_실행.bat",
+     "path": "works/2026-07-07-workreport-autofill/WorkReport_AutoFill_실행.bat",
+     "kind": "other",
+     "size": 3368
+    },
+    {
+     "name": "autofill_app.py",
+     "path": "works/2026-07-07-workreport-autofill/autofill_app.py",
+     "kind": "code",
+     "size": 25675
+    },
+    {
+     "name": "config/holidays_kr.json",
+     "path": "works/2026-07-07-workreport-autofill/config/holidays_kr.json",
+     "kind": "code",
+     "size": 1945
+    },
+    {
+     "name": "config/teams/smr_team.json",
+     "path": "works/2026-07-07-workreport-autofill/config/teams/smr_team.json",
+     "kind": "code",
+     "size": 4930
+    },
+    {
+     "name": "config/teams/xe100_ci_pjt.json",
+     "path": "works/2026-07-07-workreport-autofill/config/teams/xe100_ci_pjt.json",
+     "kind": "code",
+     "size": 13858
+    },
+    {
+     "name": "requirements.txt",
+     "path": "works/2026-07-07-workreport-autofill/requirements.txt",
+     "kind": "code",
+     "size": 59
+    },
+    {
+     "name": "src/outlook_writer.py",
+     "path": "works/2026-07-07-workreport-autofill/src/outlook_writer.py",
+     "kind": "code",
+     "size": 8167
+    },
+    {
+     "name": "src/report_generator_web.py",
+     "path": "works/2026-07-07-workreport-autofill/src/report_generator_web.py",
+     "kind": "code",
+     "size": 11187
+    },
+    {
+     "name": "src/scheduler.py",
+     "path": "works/2026-07-07-workreport-autofill/src/scheduler.py",
+     "kind": "code",
+     "size": 12824
+    },
+    {
+     "name": "src/validator.py",
+     "path": "works/2026-07-07-workreport-autofill/src/validator.py",
+     "kind": "code",
+     "size": 3473
+    }
+   ],
+   "archive": [],
+   "history_url": "https://github.com/baesay-lang/laughing-train/commits/main/works/2026-07-07-workreport-autofill"
+  }
+ ]
+}

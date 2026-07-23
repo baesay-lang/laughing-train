@@ -1,0 +1,9 @@
+{
+  "title": "주간업무 캘린더 앱 (Work Calendar)",
+  "date": "2026-07-14",
+  "category": "코드/도구",
+  "project": "업무 자동화",
+  "description": "팀 업무코드 기반으로 주간 일정을 만들고 관리하는 데스크톱 캘린더 앱. 일/주/월 뷰, 정기 일정, Outlook 등록·ICS 내보내기, Excel 보고서 생성, 분석 대시보드, 자동 업데이트를 지원한다. 현재 v3.5.0 (플랜트영업팀 업무 코드 추가).",
+  "tags": ["캘린더", "업무코드", "Outlook", "v3.5.0"],
+  "external_url": "https://baesay-lang.github.io/smr-hub/work-calendar.html"
+}

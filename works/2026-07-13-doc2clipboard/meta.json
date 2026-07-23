@@ -1,0 +1,9 @@
+{
+  "title": "Doc2Clipboard / Doc2Batch — 문서 붙여넣기 업로드 도구",
+  "date": "2026-07-13",
+  "category": "코드/도구",
+  "project": "업무 자동화",
+  "description": "파일 업로드가 막힌 사내 PC에서 폴더 안의 문서를 붙여넣기(Ctrl+V)로 claude.ai에 넘길 수 있게 해주는 PowerShell 도구. 텍스트 추출 모드와 PDF/이미지 배치 모드, 우클릭 메뉴 설치 스크립트 포함.",
+  "tags": ["PowerShell", "claude.ai", "Windows"],
+  "main": "README.md"
+}
